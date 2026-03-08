@@ -1,36 +1,55 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# <ShareMyCode />
+
+A web application inspired by [ray.so](https://ray.so) for creating beautiful images of your code to share.
+
+## Features
+
+- **Code Editor** — Write or paste code directly in the preview card
+- **10 Gradient Themes** — Candy, Midnight, Sunset, Ocean, Forest, Breeze, Flamingo, Crimson, Arctic, Noir
+- **Customizable Padding** — 6 padding options (16–128px)
+- **Dark/Light Mode** — Toggle between dark and light themes
+- **Line Numbers** — Show or hide line numbers
+- **Export Options** — Copy code, copy as image, or save as PNG
+- **Editable Title** — Click the filename in the title bar to rename
+- **Persistent State** — Settings and code are saved to localStorage
+- **Reset** — One-click reset to defaults when changes are made
+- **Responsive** — Works on desktop and mobile
+
+## Tech Stack
+
+- **Next.js 16** with App Router
+- **React 19**
+- **TypeScript**
+- **Tailwind CSS 4**
+- **shadcn/ui** (Radix UI primitives)
+- **Zustand** for state management
+- **next-themes** for dark/light mode
+- **html-to-image** for PNG export
+- **JetBrains Mono** font
 
 ## Getting Started
 
-First, run the development server:
-
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
+# Install dependencies
+bun install
+
+# Run development server
 bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) to start creating code images.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Project Structure
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```
+src/
+  app/              # Next.js pages and layout
+  components/
+    code-preview    # Main code preview card
+    common/         # Header, Footer, Logo, controls
+    theme/          # Theme provider and toggle
+    ui/             # shadcn/ui components
+  data/             # Themes and padding constants
+  store/            # Zustand editor store
+  lib/              # Utilities
+```
