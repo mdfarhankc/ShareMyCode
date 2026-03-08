@@ -1,6 +1,6 @@
-# <ShareMyCode />
+# ShareMyCode
 
-A web application inspired by [ray.so](https://ray.so) for creating beautiful images of your code to share.
+A web application for creating beautiful images of your code to share.
 
 ## Features
 
