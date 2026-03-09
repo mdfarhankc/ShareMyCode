@@ -13,8 +13,16 @@ const codeStyle = {
 } as const;
 
 export default function CodePreview() {
-  const { code, theme, padding, showLineNumbers, title, language, setCode, setTitle } =
-    useEditorStore();
+  const {
+    code,
+    theme,
+    padding,
+    showLineNumbers,
+    title,
+    language,
+    setCode,
+    setTitle,
+  } = useEditorStore();
   const { resolvedTheme } = useTheme();
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const lines = code.split("\n");
@@ -24,9 +32,6 @@ export default function CodePreview() {
 
   const lineNumberWidth = "1.25rem";
   const lineNumberGap = "1.5rem";
-  const codePaddingLeft = showLineNumbers
-    ? `calc(${lineNumberWidth} + ${lineNumberGap})`
-    : "0px";
 
   return (
     <div
@@ -41,9 +46,9 @@ export default function CodePreview() {
         {/* Title bar */}
         <div className="flex items-center gap-2 rounded-t-xl border-b border-border bg-muted px-4 py-3">
           <div className="flex gap-2">
-            <span className="size-3 rounded-full bg-[#ff5f57]" />
-            <span className="size-3 rounded-full bg-[#febc2e]" />
-            <span className="size-3 rounded-full bg-[#28c840]" />
+            <span className="size-3 rounded-full bg-red-500/80" />
+            <span className="size-3 rounded-full bg-yellow-500/80" />
+            <span className="size-3 rounded-full bg-green-500/80" />
           </div>
           <input
             type="text"

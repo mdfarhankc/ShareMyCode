@@ -7,7 +7,7 @@ export default function ThemeSelection() {
   const setTheme = useEditorStore((s) => s.setTheme);
   return (
     <div className="flex gap-1.5">
-      {THEMES.map((theme) => (
+      {THEMES.map((theme, i) => (
         <button
           key={theme.id}
           title={theme.name}
@@ -17,6 +17,7 @@ export default function ThemeSelection() {
             selectedTheme.id === theme.id
               ? "border-primary scale-110"
               : "border-transparent",
+            i >= 5 && "hidden sm:block",
           )}
           style={{ background: theme.background }}
         />

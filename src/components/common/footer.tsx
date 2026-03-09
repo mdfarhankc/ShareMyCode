@@ -1,22 +1,22 @@
 "use client";
 
 import { useState } from "react";
-import { Separator } from "../ui/separator";
-import { Button } from "../ui/button";
+import { Separator } from "@/components/ui/separator";
+import { Button } from "@/components/ui/button";
 import {
   Drawer,
   DrawerContent,
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
-} from "../ui/drawer";
+} from "@/components/ui/drawer";
 import { useEditorStore, useIsDirty } from "@/store/editor-store";
-import ThemeToggle from "../theme/theme-toggle";
-import LineNumbers from "./line-numbers";
-import PaddingSection from "./padding-section";
-import ThemeSelection from "./theme-selection";
-import ExportActions from "./export-actions";
-import LanguageSelector from "./language-selector";
+import ThemeToggle from "@/components/theme/theme-toggle";
+import LineNumbers from "@/components/actions/line-numbers";
+import PaddingSection from "@/components/actions/padding-section";
+import ThemeSelection from "@/components/actions/theme-selection";
+import ExportActions from "@/components/actions/export-actions";
+import LanguageSelector from "@/components/actions/language-selector";
 
 function Section({
   label,
@@ -26,8 +26,8 @@ function Section({
   children: React.ReactNode;
 }) {
   return (
-    <div className="flex flex-col gap-2">
-      <span className="text-xs uppercase tracking-wider text-muted-foreground">
+    <div className="flex items-center justify-between gap-4">
+      <span className="shrink-0 text-xs uppercase tracking-wider text-muted-foreground">
         {label}
       </span>
       <div>{children}</div>
@@ -36,55 +36,43 @@ function Section({
 }
 
 function SettingsDrawerContent() {
-  const reset = useEditorStore((s) => s.reset);
-  const isDirty = useIsDirty();
-
   return (
-    <div className="flex flex-wrap items-start justify-center gap-6 px-6 pb-6 sm:gap-8">
+    <div className="flex flex-col gap-4 px-6 pb-6">
       <Section label="Language">
         <LanguageSelector />
       </Section>
 
-      <Separator orientation="vertical" className="hidden sm:block" />
+      <Separator />
 
       <Section label="Theme">
         <ThemeSelection />
       </Section>
 
-      <Separator orientation="vertical" className="hidden sm:block" />
+      <Separator />
 
       <Section label="Padding">
         <PaddingSection />
       </Section>
 
-      <Separator orientation="vertical" className="hidden sm:block" />
+      <Separator />
 
       <Section label="Background">
         <ThemeToggle />
       </Section>
 
-      <Separator orientation="vertical" className="hidden sm:block" />
+      <Separator />
 
       <Section label="Line #">
         <LineNumbers />
       </Section>
-
-      {isDirty && (
-        <>
-          <Separator orientation="vertical" className="hidden sm:block" />
-          <Section label="Reset">
-            <Button variant="destructive" onClick={reset}>
-              Reset
-            </Button>
-          </Section>
-        </>
-      )}
     </div>
   );
 }
 
 export default function Footer() {
   const [open, setOpen] = useState(false);
+  const reset = useEditorStore((s) => s.reset);
+  const isDirty = useIsDirty();
 
   return (
     <footer className="fixed bottom-0 z-10 w-full border-t border-border bg-card/80 px-4 py-3 backdrop-blur-sm sm:px-6">
@@ -106,6 +94,15 @@ export default function Footer() {
         <Separator orientation="vertical" />
 
         <ExportActions />
+
+        {isDirty && (
+          <>
+            <Separator orientation="vertical" />
+            <Button variant="destructive" size="sm" onClick={reset}>
+              Reset
+            </Button>
+          </>
+        )}
       </div>
     </footer>
   );

@@ -4,7 +4,7 @@ import { useCallback, useState } from "react";
 import { toPng } from "html-to-image";
 import { useEditorStore } from "@/store/editor-store";
 import { getJetBrainsMonoCSS } from "@/lib/embed-font";
-import { Button } from "../ui/button";
+import { Button } from "@/components/ui/button";
 
 function getPreviewNode() {
   return document.querySelector<HTMLElement>('[data-preview="root"]');
@@ -69,13 +69,18 @@ export default function ExportActions() {
 
   return (
     <div className="flex flex-wrap gap-2">
-      <Button variant="enabled" onClick={handleCopyCode}>
+      <Button size={"sm"} variant="enabled" onClick={handleCopyCode}>
         {codeCopied ? "Copied!" : "Copy Code"}
       </Button>
-      <Button variant="enabled" onClick={handleCopyImage}>
+      <Button size={"sm"} variant="enabled" onClick={handleCopyImage}>
         {imageCopied ? "Copied!" : "Copy Image"}
       </Button>
-      <Button variant="default" onClick={handleSaveImage} disabled={saving}>
+      <Button
+        size={"sm"}
+        variant="default"
+        onClick={handleSaveImage}
+        disabled={saving}
+      >
         {saving ? "Saving..." : "Save PNG"}
       </Button>
     </div>

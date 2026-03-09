@@ -1,5 +1,5 @@
 import { useEditorStore } from "@/store/editor-store";
-import { Button } from "../ui/button";
+import { Button } from "@/components/ui/button";
 
 export default function LineNumbers() {
   const showLineNumbers = useEditorStore((s) => s.showLineNumbers);
@@ -7,6 +7,7 @@ export default function LineNumbers() {
 
   return (
     <Button
+      size={"sm"}
       onClick={() => setShowLineNumbers(!showLineNumbers)}
       variant={showLineNumbers ? "enabled" : "disabled"}
     >
