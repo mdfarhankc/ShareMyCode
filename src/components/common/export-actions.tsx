@@ -3,10 +3,24 @@
 import { useCallback, useState } from "react";
 import { toPng } from "html-to-image";
 import { useEditorStore } from "@/store/editor-store";
+import { getJetBrainsMonoCSS } from "@/lib/embed-font";
 import { Button } from "../ui/button";
 
 function getPreviewNode() {
   return document.querySelector<HTMLElement>('[data-preview="root"]');
+}
+
+async function getExportOptions() {
+  const fontEmbedCSS = await getJetBrainsMonoCSS();
+  return {
+    pixelRatio: 2,
+    skipFonts: true,
+    fontEmbedCSS,
+    filter: (node: Node) => {
+      if (node instanceof HTMLTextAreaElement) return false;
+      return true;
+    },
+  };
 }
 
 export default function ExportActions() {
@@ -28,7 +42,8 @@ export default function ExportActions() {
 
     setSaving(true);
     try {
-      const dataUrl = await toPng(node, { pixelRatio: 2, skipFonts: true });
+      const options = await getExportOptions();
+      const dataUrl = await toPng(node, options);
       const link = document.createElement("a");
       const name = title.replace(/\.[^.]+$/, "") || "sharemycode";
       link.download = `${name}.png`;
@@ -43,7 +58,8 @@ export default function ExportActions() {
     const node = getPreviewNode();
     if (!node) return;
 
-    const dataUrl = await toPng(node, { pixelRatio: 2, skipFonts: true });
+    const options = await getExportOptions();
+    const dataUrl = await toPng(node, options);
     const res = await fetch(dataUrl);
     const blob = await res.blob();
     await navigator.clipboard.write([new ClipboardItem({ "image/png": blob })]);

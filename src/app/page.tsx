@@ -1,6 +1,6 @@
 "use client";
 
-import CodePreview from "@/components/code-preview";
+import CodePreview from "@/components/common/code-preview";
 import Footer from "@/components/common/footer";
 import Header from "@/components/common/header";
 

@@ -1,20 +1,11 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { THEMES, type Theme } from "@/data/themes";
+import { SAMPLE_CODE, SAMPLE_TITLE } from "@/data/code";
 import { type Padding } from "@/data/paddings";
+import { LANGUAGES, type Language } from "@/data/languages";
 
-const SAMPLE_CODE = `function fibonacci(n: number): number {
-  if (n <= 1) return n;
-  return fibonacci(n - 1) + fibonacci(n - 2);
-}
 
-// Generate first 10 fibonacci numbers
-const results = Array.from({ length: 10 }, (_, i) =>
-  fibonacci(i)
-);
-
-console.log(results);`;
-const SAMPLE_TITLE = "fibonacci.ts";
 
 const DEFAULTS = {
     code: SAMPLE_CODE,
@@ -22,6 +13,7 @@ const DEFAULTS = {
     theme: THEMES[0],
     padding: 64 as Padding,
     showLineNumbers: true,
+    language: LANGUAGES[0],
 };
 
 type EditorState = {
@@ -30,12 +22,14 @@ type EditorState = {
     theme: Theme;
     padding: Padding;
     showLineNumbers: boolean;
+    language: Language;
 
     setCode: (code: string) => void;
     setTitle: (title: string) => void;
     setTheme: (theme: Theme) => void;
     setPadding: (padding: Padding) => void;
     setShowLineNumbers: (show: boolean) => void;
+    setLanguage: (language: Language) => void;
     reset: () => void;
 };
 
@@ -49,6 +43,11 @@ export const useEditorStore = create<EditorState>()(
             setTheme: (theme) => set({ theme }),
             setPadding: (padding) => set({ padding }),
             setShowLineNumbers: (showLineNumbers) => set({ showLineNumbers }),
+            setLanguage: (language) =>
+                set((state) => {
+                    const baseName = state.title.replace(/\.[^.]+$/, "") || "untitled";
+                    return { language, title: `${baseName}.${language.extension}` };
+                }),
             reset: () => set(DEFAULTS),
         }),
         {
@@ -59,6 +58,7 @@ export const useEditorStore = create<EditorState>()(
                 theme: state.theme,
                 padding: state.padding,
                 showLineNumbers: state.showLineNumbers,
+                language: state.language,
             }),
         },
     ),
@@ -71,5 +71,6 @@ export const useIsDirty = () =>
             s.title !== DEFAULTS.title ||
             s.theme.id !== DEFAULTS.theme.id ||
             s.padding !== DEFAULTS.padding ||
-            s.showLineNumbers !== DEFAULTS.showLineNumbers,
+            s.showLineNumbers !== DEFAULTS.showLineNumbers ||
+            s.language.id !== DEFAULTS.language.id,
     );
